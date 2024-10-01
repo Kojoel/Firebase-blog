@@ -36,6 +36,19 @@
             }
         }
 
+        .username-box {
+            
+            input.username {
+                width: 100%;
+                height: 40px;
+                background: lightgrey; 
+                border-radius: 8px;
+                border: none;
+                padding-left: 20px;
+                color: black;
+            }
+        }
+
         .password-box {
 
             input.password {
@@ -122,6 +135,10 @@
             width: 100%;
             text-align: right;
             color: crimson;
+
+            span {
+                font-size: 10pt;
+            }
         }
     }
 

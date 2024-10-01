@@ -9,16 +9,20 @@
             </div>
         </div>
         <div class="password-box">
-            <input type="text" class="password" placeholder="Password" formControlName="password" name="password">
+            <input type="password" class="password" placeholder="Password" formControlName="password" name="password">
             <div class="error" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)">
                 <span *ngIf="loginForm.controls['password'].errors?.['required']">Cant be empty</span>
                 <span *ngIf="loginForm.controls['password'].errors?.['minlength']">No less than 6 characters</span>
             </div>
         </div>
 
-        <!-- <div class="cred-invalid" *ngIf="api.checkFormSubmitted !== true && loginForm.touched && loginForm.valid">
-            <span class="cred-invalid">{{ api.loginErrorMessage }}</span>
-        </div> -->
+        <div class="error" *ngIf="loginForm.valid && loginForm.dirty">
+            <span class="error">{{ errorMessage }}</span>
+        </div>
+
+        <div class="error" *ngIf="emptyFormDetect === true && !loginForm.dirty">
+            <span class="error">Form cannot be empty</span>
+        </div>
         
         <div class="hr"></div>
 

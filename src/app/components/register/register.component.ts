@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { passwordMatchValidator } from '../../validators/password-match.validator';
 
 @Component({
   selector: 'app-register',
@@ -16,13 +18,13 @@ export class RegisterComponent {
 
   successResponse: boolean = false;
   successMessage: string = '';
-  errorResponse: boolean = false;
-  errorMessage: string = '';
+  // errorResponse: boolean = false;
+  errorMessage: string | null = null;
   emptyFormDetect: boolean = false;
 
   constructor(
     private router: Router,
-
+    private authService: AuthService,
   ) {
     this.signupForm = new FormGroup(
       {
@@ -30,70 +32,39 @@ export class RegisterComponent {
         password: new FormControl("", [
           Validators.required, 
           Validators.minLength(6),
-          // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/),
         ]),
+        username: new FormControl("", [Validators.required]),
         rePassword: new FormControl("", [Validators.required])
       },
-      // { validators: passwordMatchValidator() }
+      { validators: passwordMatchValidator() }
     );
   }
 
-  goToLogIn() {
-    if(this.successResponse) {
-      this.router.navigate(['/']);
-    } 
-
-    else if(this.errorResponse) {
-      // this.router.navigate(['/']);
+  onSubmit(): void {
+    if(this.signupForm.valid) {
+      const rawSignupForm = this.signupForm.getRawValue();
+      this.authService.register(
+        rawSignupForm.email, 
+        rawSignupForm.username, 
+        rawSignupForm.password
+      ).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/');
+        },
+        error: (err) => {
+          this.errorMessage = err.code;
+          console.log(this.errorMessage);
+        }
+      });
+    }
+    else {
+      this.emptyFormDetect = true;
     }
   }
 
   goToLogInNoVal() {
     this.router.navigate(['/']);
   }
-
-  onSubmit(signupForm: any) {
-
-    const signupFormCheck = {
-      email: signupForm.value.email,
-      password: signupForm.value.password,
-    }
-
-    if(signupForm.value.email !== '' && signupForm.value.password !== '') {
-
-    //   // console.log(signupFormCheck);
-    //   this.api.onSignUp(signupFormCheck).subscribe({
-    //     next: (response) => {
-    //       if(response.message) {
-    //         // console.log('signup successful: ', response)
-    //         this.successResponse = true;
-    //         this.successMessage = response.message;
-    //         this.goToLogIn()
-    //       }
-    //     },
-    //     error: (error) => {
-    //       this.errorResponse = true;
-    //       if (error.status === 400) {
-    //       this.errorMessage = error.error.message;
-    //     } else if (error.status === 500) {
-    //       // console.log('Server error: ', error.error.message); 
-    //       this.errorMessage = error.error.message;
-    //     } else {
-    //       // console.log('Signup failed: ', error.message);
-    //       this.errorMessage = error.error.message;
-    //     }
-    //   },
-    //   complete: () => {
-    //     console.log('signup operation completed');
-    //   }
-    // })
-    }
-    else {
-      // this.emptyFormDetect = true;
-    }
-
-  }
-
 
 
 }

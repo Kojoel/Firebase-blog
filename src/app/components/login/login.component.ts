@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,12 @@ export class LoginComponent {
   loginForm: FormGroup;
   isFormSubmitted: boolean = false;
 
+  errorMessage: string | null = null;
+  emptyFormDetect: boolean = false;
+
   constructor(
     private router: Router,
-    // public api: ApiService,
+    private authService: AuthService
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
@@ -28,22 +32,25 @@ export class LoginComponent {
     this.router.navigate(['/register']);
   }
 
-  goToHome() {
-    if(this.isFormSubmitted) {
-      this.router.navigate(['/home'])
+  onSubmit(): void {
+    if(this.loginForm.valid) {
+      const rawloginForm = this.loginForm.getRawValue();
+      this.authService.login(
+        rawloginForm.email, 
+        rawloginForm.password
+      ).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/home');
+        },
+        error: (err) => {
+          this.errorMessage = err.code;
+          console.log(this.errorMessage);
+        }
+      });
     }
-  }
-
-  onSubmit() {
-  //   if(this.loginForm.value.email !== '' || this.loginForm.value.password !== '') {
-  //     this.api.onLogin(this.loginForm.value);
-  //   }
-
-  //   const isFormValid = this.api.checkFormSubmitted;
-
-  //   this.isFormSubmitted = isFormValid;
-  //   this.loginForm.markAllAsTouched();
-  //   this.goToHome()
+    else {
+      this.emptyFormDetect = true;
+    }
   }
 
 }
