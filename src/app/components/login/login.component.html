@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="logo">
+    <svg width="33" height="27" xmlns="http://www.w3.org/2000/svg"><path d="m26.463.408 3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-3.2l3.2 6.4h-4.8l-3.2-6.4h-1.6a3.186 3.186 0 0 0-3.184 3.2l-.016 19.2a3.2 3.2 0 0 0 3.2 3.2h25.6a3.2 3.2 0 0 0 3.2-3.2V.408h-6.4Z" fill="#FC4747"/></svg>
+</div>
+
+<div class="form-container">
+    <form [formGroup]="loginForm">
+        <span class="form-title">Login</span>
+        <div class="email-box">
+            <input type="text" class="email" placeholder="Email" formControlName="email" name="email">
+            <div class="error" *ngIf="loginForm.controls['email'].invalid && (loginForm.controls['email'].touched || loginForm.controls['email'].dirty)">
+                <span *ngIf="loginForm.controls['email'].errors?.['required']">Cant be empty</span>
+                <span *ngIf="loginForm.controls['email'].errors?.['email']" >Enter valid email</span>
+            </div>
+        </div>
+        <div class="password-box">
+            <input type="text" class="password" placeholder="Password" formControlName="password" name="password">
+            <div class="error" *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].touched || loginForm.controls['password'].dirty)">
+                <span *ngIf="loginForm.controls['password'].errors?.['required']">Cant be empty</span>
+                <span *ngIf="loginForm.controls['password'].errors?.['minlength']">No less than 6 characters</span>
+            </div>
+        </div>
+
+        <!-- <div class="cred-invalid" *ngIf="api.checkFormSubmitted !== true && loginForm.touched && loginForm.valid">
+            <span class="cred-invalid">{{ api.loginErrorMessage }}</span>
+        </div> -->
+    
+        <button class="login-btn" (click)="onSubmit()">Login to your account</button>
+        <span class="no-account-extention-point">Don't have an account? <span (click)="goToSignUp()">Sign Up</span></span>
+    </form>
+</div>
