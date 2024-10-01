@@ -1,1 +1,41 @@
-<p>register works!</p>
+
+<div class="form-container">
+    <form [formGroup]="signupForm">
+        <span class="form-title">Sign Up</span>
+        <div class="email-box">
+            <input type="text" class="email" placeholder="Email" formControlName="email" name="email">
+            <div class="error" *ngIf="signupForm.controls['email'].invalid && (signupForm.controls['email'].touched || signupForm.controls['email'].dirty || isFormSubmitted)">
+                <span *ngIf="signupForm.controls['email'].errors?.['required']">Cant be empty</span>
+                <span *ngIf="signupForm.controls['email'].errors?.['email']" >Enter valid email</span>
+            </div>
+        </div>
+        <div class="password-box">
+            <input type="text" class="password" placeholder="Password" formControlName="password" name="password">
+            <div class="error" *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].touched || signupForm.controls['password'].dirty || isFormSubmitted)">
+                <span *ngIf="signupForm.controls['password'].errors?.['required']">Cant be empty</span>
+                <span *ngIf="signupForm.controls['password'].errors?.['minlength']">No less than 6 characters</span>
+                <!-- <span *ngIf="signupForm.controls['password'].errors?.['pattern']">Must contain 1 uppercase letter and number</span> -->
+            </div>
+        </div>
+        <div class="re-password-box">
+            <input type="text" class="re-password" placeholder="Repeat Password" formControlName="rePassword" name="Confirm Password">
+            <div class="error" *ngIf="signupForm.controls['rePassword'].invalid && (signupForm.controls['rePassword'].touched || signupForm.controls['rePassword'].dirty || isFormSubmitted)">
+                <span *ngIf="signupForm.controls['rePassword'].errors?.['required']">Cant be empty</span>
+            </div>
+
+            <div class="error" *ngIf="signupForm.hasError('passwordMismatch') && (signupForm.controls['rePassword'].touched || isFormSubmitted)">
+                <span>Passwords do not match</span>
+            </div>
+        </div>
+
+        <div class="error" *ngIf="errorResponse === true">
+            <span class="error-message">{{errorMessage}}</span>
+        </div>
+        <!-- <div class="error" *ngIf="emptyFormDetect === true && signupForm.dirty">
+            <span class="error-message">Empty Form: Enter valid credentials</span>
+        </div> -->
+        
+        <button class="login-btn" (click)="onSubmit(signupForm)">Create an account</button>
+        <span class="no-account-extention-point">Already have an account? <span href="" (click)="goToLogInNoVal()">Login</span></span>
+    </form>
+</div>

@@ -24,8 +24,8 @@ export class LoginComponent {
     })
   }
 
-  goToSignUp() {
-    this.router.navigate(['/signup']);
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 
   goToHome() {
