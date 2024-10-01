@@ -66,5 +66,16 @@ export class RegisterComponent {
     this.router.navigate(['/']);
   }
 
+  registerWithGoogle() {
+    this.authService.googleSignIn().subscribe({
+      next: (user) => {
+        this.router.navigateByUrl('/');
+      },
+      error: (err) => {
+        this.errorMessage = err.code;
+      }
+    })
+  }
+
 
 }

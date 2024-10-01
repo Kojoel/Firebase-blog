@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
+import { Injectable, signal } from '@angular/core';
+import { Auth, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, user, signInWithPopup, signOut } from '@angular/fire/auth';
 import { from } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { UserInterface } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,11 @@ import { Observable } from 'rxjs/internal/Observable';
 export class AuthService {
 
   constructor(
-    private firebaseAuth: Auth
+    private firebaseAuth: Auth,
   ) { }
+
+  user$ = user(this.firebaseAuth);
+  currentUserSig = signal<UserInterface | null | undefined>(undefined);
 
   register(
     email: string, 
@@ -39,4 +43,18 @@ export class AuthService {
 
     return from(promise);
   }
+
+  googleSignIn(): Observable<any> {
+    const provider = new GoogleAuthProvider();
+    return from(signInWithPopup(this.firebaseAuth, provider));
+  }
+
+  logout(): Observable<void> {
+    const promise = signOut(this.firebaseAuth);
+    return from(promise);
+  }
+
 }
+
+
+

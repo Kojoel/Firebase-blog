@@ -53,4 +53,15 @@ export class LoginComponent {
     }
   }
 
+  loginWithGoogle() {
+    this.authService.googleSignIn().subscribe({
+      next: (user) => {
+        this.router.navigateByUrl('/home');
+      },
+      error: (err) => {
+        this.errorMessage = err.code;
+      }
+    })
+  }
+
 }
