@@ -5,7 +5,28 @@
     flex-direction: column;
     align-items: center;
     padding-top: 3rem;
-    background: whitesmoke;
+
+    .logo-menu {
+        // background: yellow;
+        width: 768px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+
+        .logo {
+            display :flex;
+            align-items: center;
+
+
+            svg.logo-icon {
+                font-size: 50px;
+            }
+
+            .logo-text {
+
+            }
+        }
+    }
 
     .addPost-container {
         width: 768px;
@@ -22,11 +43,11 @@
         textarea {
             font-family: "Outfit", sans-serif; 
             width: 100%;
-            height: 150px;
+            height: 120px;
             border: none;
             padding: 40px 20px 20px 20px;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 1.3rem;
             color: rgb(56, 56, 56);
 
         }
@@ -38,8 +59,8 @@
         button {
             position: absolute;
             z-index: 3;
-            right: 20px;
-            bottom: -10px;
+            right: 30px;
+            bottom: -15px;
             width: 120px;
             height: 40px;
             padding: 5px;
@@ -58,56 +79,99 @@
     }
 
     .post-list-container {
-        width: 768px;
-        height: fit-content;
+        width: 100%;
         display: flex;
-        flex-direction: column;
-        gap: 10px;
-        position: relative;
-        // background: white;
-        // border-radius: 8px;
-        
-        .post-item {
-            width: 100%;
-            height: fit-content;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid lightgrey;
-            padding: 5px 5px 10px 5px;
+        justify-content: center;
 
-            .poster-details {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px 20px 0 20px;
+        .posts {
+            width: 768px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
 
-                .credentials {
-                    display :flex;
+
+
+            .post-item {
+                width: 100%;
+                height: fit-content;
+                background: white;
+                border-radius: 8px;
+                border: 1px solid lightgrey;
+                padding: 5px 5px 10px 5px;
+
+                .poster-details {
+                    display: flex;
+                    justify-content: space-between;
                     align-items: center;
-                    gap: 5px;
+                    padding: 10px 20px 0 20px;
 
-                    .user-image {
-                        width: 30px;
-                        height: 30px;
-                        border-radius: 50%;
-                        background: lightgrey;
-                        margin-right: 7px;
+                    .credentials {
+                        display :flex;
+                        align-items: center;
+                        gap: 5px;
+
+                        .user-image {
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 50%;
+                            background: lightgrey;
+                            margin-right: 7px;
+                        }
+                        .username {
+                            font-weight: 600;
+                        }
                     }
-                    .username {
-                        font-weight: 600;
+
+                    .timestamps {
+                        display: flex;
+                        gap: 5px;
+                        color: grey;
+
+                        .createdAt-date, .createdAt-time {
+                            font-size: .8rem;
+                        }
+
+                        .time-hr {
+                            width: 1px;
+                            height: 20px;
+                            background: lightgrey;
+                        }
                     }
                 }
 
-                .timestamps {
+                p.post-content {
+                    color: rgb(56, 56, 56);
+                    font-size: 1rem;
+                    margin: 10px 20px 10px 60px;
+                    padding: 15px 10px 15px 15px;
+                    // background: yellow;
+                    border: 1px solid lightgrey;
+                    border-radius: 8px;
+
+                }
+
+                .post-interaction {
                     display: flex;
-                    gap: 5px;
-                    color: grey;
-
-                    .createdAt-date, .createdAt-time {
-                        font-size: .8rem;
+                    align-items: center;
+                    margin-left: 50px;
+                    // gap: 5px;
+                    // position: absolute;
+                    // left: 20px;
+                    // bottom: 12px;
+                    
+        
+                    span {
+                        padding: 2px 10px;
+                        color: grey;
+                        font-size: 1rem;
+                        cursor: pointer;
+                        transition: .2s ease-in-out;
                     }
-
-                    .time-hr {
+                    span:hover {
+                        background: rgb(236, 236, 236);
+                    }
+        
+                    div.hr {
                         width: 1px;
                         height: 20px;
                         background: lightgrey;
@@ -115,43 +179,111 @@
                 }
             }
 
-            p.post-content {
-                color: rgb(56, 56, 56);
-                font-size: 1rem;
-                margin: 10px 20px 10px 60px;
-                padding: 15px 10px 15px 15px;
-                // background: yellow;
+            .comments {
+                height: fit-content;
+                margin-top: 0px;
+                padding: 20px;
                 border: 1px solid lightgrey;
                 border-radius: 8px;
-
-            }
-
-            .post-interaction {
-                display: flex;
-                align-items: center;
                 margin-left: 50px;
-                // gap: 5px;
-                // position: absolute;
-                // left: 20px;
-                // bottom: 12px;
+
+                .title-icon {
+                    display: flex;
+                    justify-content: space-between;
+                    padding-bottom: 20px;
+                    border-bottom: 1px solid lightgrey;
+                    margin-bottom: 10px;
+
+                    .icon {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+
+                        svg {
+                            width: 20px;
+                            height: 20px;
+                        }
+    
+                        p.title {
+                            font-size: 1.2rem;
+                        }
+                    }
+
+                }
+
+                .comments-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+                    background: rgb(231, 231, 231);
+                    border-radius: 8px;
+                    padding: 20px;
+
+                    .comment-item {
+
+                        p.user-comment {
+                            background: lightgrey;
+                            padding: 10px 20px;
+                            border-radius: 8px;
+                        }
+    
+                        .time-commented {
+                            display: flex;
+                            gap: 10px;
+                            color: grey;
+                            justify-content: flex-end;
+                            font-size: .8rem;
+                        }
+
+                    }
+                }
                 
-    
-                span {
-                    padding: 2px 10px;
-                    color: grey;
-                    font-size: 1rem;
-                    cursor: pointer;
-                    transition: .2s ease-in-out;
+                .addComment {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 15px;
+                    color: white;
+                    margin-top: 1.5rem;
+
+                    input.comment-input {
+                        font-family: "Outfit", sans-serif;
+                        min-height: 50px;
+                        padding: 0 10px 0 20px;
+                        border-radius: 999px;
+                        border: none;
+                        // background: rgb(231, 231, 231);
+                        background: lightgrey;
+                        flex: 1;
+                        transition: .2s ease-in-out;
+                    }
+
+                    input:focus {
+                        outline: none;
+                        border: 1px solid rgb(56, 56, 56); 
+                    }
+
+                    .add-icon-container {
+                        width: 50px;
+                        height: 50px;
+                        background: rgb(36, 76, 255);
+                        border-radius: 50%;
+                        display: grid;
+                        place-items: center;
+                        transition: .2s ease-in-out;
+                        cursor: pointer;
+
+                        .add-icon {
+                           
+                            path {
+            
+                            }
+                        }
+                    }
+                    .add-icon-container:hover {
+                        opacity: .8;
+                    }
                 }
-                span:hover {
-                    background: rgb(236, 236, 236);
-                }
-    
-                div.hr {
-                    width: 1px;
-                    height: 20px;
-                    background: lightgrey;
-                }
+
             }
         }
     }

@@ -1,32 +1,100 @@
 <div class="main-container">
+    <div class="logo-menu">
+        <div class="logo">
+            <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="headset">
+                <path d="M6 19H4c-2.2 0-4-1.8-4-4v-1c0-2.2 1.8-4 4-4h2c.6 0 1 .4 1 1v7c0 .6-.4 1-1 1zm-2-7c-1.1 0-2 .9-2 2v1c0 1.1.9 2 2 2h1v-5H4zm16 7h-2c-.6 0-1-.4-1-1v-7c0-.6.4-1 1-1h2c2.2 0 4 1.8 4 4v1c0 2.2-1.8 4-4 4zm-1-2h1c1.1 0 2-.9 2-2v-1c0-1.1-.9-2-2-2h-1v5z"></path>
+                <path d="M20.9 12.1h-.2c-.5-.1-.9-.6-.8-1.1 0-.3.1-.6.1-1 0-4.4-3.6-8-8-8s-8 3.6-8 8c0 .4 0 .7.1 1 .1.5-.3 1.1-.8 1.1-.5.1-1.1-.3-1.1-.8-.2-.4-.2-.8-.2-1.3C2 4.5 6.5 0 12 0s10 4.5 10 10c0 .5 0 .9-.1 1.3-.1.5-.5.8-1 .8zM12 24c-2.2 0-3-1.8-3-3s.8-3 3-3 3 1.8 3 3c0 .2 0 .4-.1.6 2.2-.6 3.7-2 4.5-4 .2-.5.8-.8 1.3-.6.5.2.8.8.6 1.3-1 2.6-3.5 5.7-9.3 5.7zm0-4c-.8 0-1 .6-1 1s.2 1 1 1 1-.6 1-1-.2-1-1-1z"></path>
+              </svg>
+            <p class="logo-text">Talk your mind!</p>
+        </div>
+        <div class="menu" (click)="logout()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+              </svg>
+        </div>
+
+    </div>
+
     <div class="addPost-container">
         <textarea name="" id="" cols="30" rows="10" placeholder="What is on your mind?..."></textarea>
         
         <button>Create Post</button>
     </div>
 
-    <h3 class="post-title">Recent Posts</h3>
-    <div class="post-list-container">
-        <div class="post-item">
-            <div class="poster-details">
-                <div class="credentials">
-                    <div class="user-image"></div>
-                    <p class="username">Nana_Kojo</p>
-                </div>
-                <div class="timestamps">
-                    <div class="createdAt-date">30.09.24</div>
-                    <div class="time-hr"></div>
-                    <div class="createdAt-time">13:41px</div>
-                </div>
-            </div>
-            <p class="post-content">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit quos inventore quisquam?
-            </p>
-            <div class="post-interaction">
-                <span>Like</span>
-                <div class="hr"></div>
-                <span>Comments (24)</span>
-            </div>
+    @if(blogPosts) {
+        <h3 class="post-title">Recent Posts</h3>
+        <div class="post-list-container">
+            <div class="posts">
+                @for(post of blogPosts; track post) {
+                    <div class="post-item">
+                        <div class="poster-details">
+                            <div class="credentials">
+                                <div class="user-image"></div>
+                                <p class="username">{{ post.author.displayName }} </p>
+                            </div>
+                            <div class="timestamps">
+                                <div class="createdAt-date">{{ post.createdAt }}</div>
+                                <div class="time-hr"></div>
+                                <div class="createdAt-time">{{ post.createdAt }}</div>
+                            </div>
+                        </div>
+                        <p class="post-content">
+                            {{ post.content }}
+                        </p>
+                        <div class="post-interaction">
+                            <span>Like</span>
+                            <div class="hr"></div>
+                            <span>Comments (24)</span>
+                        </div>
+                    </div>
+
+                    <div class="comments">
+                        <div class="title-icon">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+                                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
+                                </svg>
+                                <p class="title">Comments</p>
+                            </div>
+                            <svg class="close-btn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                            </svg>
+                        </div>
+                        <div class="comments-list">
+                            @if(post) {}
+                            <div class="comment-item">
+                                <p class="user-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                                <div class="time-commented">
+                                    <span>by Joel</span>
+                                    <span>18:36pm</span>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <p class="user-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                                <div class="time-commented">
+                                    <span>by Joel</span>
+                                    <span>18:36pm</span>
+                                </div>
+                            </div>
+                            <div class="comment-item">
+                                <p class="user-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                                <div class="time-commented">
+                                    <span>by Joel</span>
+                                    <span>18:36pm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="addComment">
+                            <input class="comment-input" type="text" placeholder="Add a comment...">
+                            <div class="add-icon-container">
+                                <svg class="add-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                                  </svg>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div> 
         </div>
-    </div>
+    }
 </div>
