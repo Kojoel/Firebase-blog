@@ -94,9 +94,9 @@
     }
 
     .post-list-container {
-        width: 100%;
         display: flex;
         justify-content: center;
+        width: 100%;
 
         .posts {
             width: 768px;
@@ -104,10 +104,8 @@
             flex-direction: column;
             gap: 20px;
 
-
-
             .post-item {
-                width: 100%;
+                // width: 100%;
                 height: fit-content;
                 background: white;
                 border-radius: 8px;
@@ -195,12 +193,15 @@
             }
 
             .comments {
-                height: fit-content;
+                // height: fit-content;
                 margin-top: 0px;
                 padding: 20px;
                 border: 1px solid lightgrey;
                 border-radius: 8px;
+                // width: 680px;
+                transition: 2s ease-in-out;
                 margin-left: 50px;
+                
 
                 .title-icon {
                     display: flex;
@@ -235,6 +236,7 @@
                     border-radius: 8px;
                     padding: 20px;
                     overflow-y: scroll;
+                    
                     
 
                     .comment-item {
@@ -308,8 +310,8 @@
 }
 
 
-
-div.profile-logout {
+//toggling menu 
+.isVisible {
     position: absolute;
     z-index: 5;
     background: white;
@@ -327,3 +329,57 @@ div.profile-logout {
         color: crimson;
     }
 }
+
+.isNotVisible {
+    position: absolute;
+    z-index: 5;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    right: 5px;
+    top: 30px;
+
+    span.profile, span.logout {
+        display: none;
+        // color: transparent;
+    }
+}
+
+//toggling comments
+.isCommentVisible {
+    height: fit-content;
+    animation: fadeDown 1s ease forwards;
+}
+
+.isCommentNotVisible {
+    animation: fadeUp 1s ease forwards;
+    height: fit-content;
+    // display: none;
+}
+
+
+
+@keyframes fadeDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px); /* Start slightly above */
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0); /* End at the original position */
+    }
+}
+
+@keyframes fadeUp {
+    0% {
+      opacity: 1;
+      transform: translateY(0); /* Start slightly above */
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-20px); /* End at the original position */
+    }
+}
+

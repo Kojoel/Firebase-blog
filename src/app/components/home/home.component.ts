@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { BlogsFirebaseService } from '../../services/blogs-firebase.service';
 import { BlogPost } from '../../interfaces/blogPosts.interace';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [UserProfileComponent],
+  imports: [UserProfileComponent, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -21,6 +22,12 @@ export class HomeComponent implements OnInit {
   ) {}
 
   blogPosts!: BlogPost[];
+
+  visible: boolean = false;
+
+  commentsVisible: boolean = false;
+
+  createdAt: Date | undefined;
 
   ngOnInit() {
     this.authService.user$.subscribe(user => {
@@ -52,5 +59,25 @@ export class HomeComponent implements OnInit {
     this.router.navigateByUrl('/profile');
   }
 
+  toggleMenuVisibility() {
+    this.visible = !this.visible;
+  }
+
+  toggleCommentsVisibility() {
+    this.commentsVisible = !this.commentsVisible;
+    console.log(this.commentsVisible);
+  }
+
+  // getTimeStamps() {
+  //   this.blogPosts.forEach(items => {
+  //     const createdAt = items.createdAt
+
+  //   })
+  // }
+
+  // convertTimestampToDateTime(timestamp: string) {
+  //   const date = new Date(timestamp * 1000); // Convert to milliseconds
+  //   return date.toLocaleString(); // Return as a human-readable string
+  // }
 
 }
