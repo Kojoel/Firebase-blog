@@ -30,4 +30,8 @@ export class UserProfileComponent {
       console.log(this.authService.currentUserSig())
     })
   }
+
+  logout() {
+    this.authService.logout();
+  }
 }

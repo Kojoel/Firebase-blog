@@ -1,0 +1,159 @@
+.main-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3rem;
+    background: whitesmoke;
+
+    .addPost-container {
+        width: 768px;
+        height: fit-content;
+        background: lightgrey;
+        border-radius: 12px;
+        position: relative;
+        padding: 10px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 3rem;
+        // border: 1px solid rgb(151, 151, 151);
+
+        textarea {
+            font-family: "Outfit", sans-serif; 
+            width: 100%;
+            height: 150px;
+            border: none;
+            padding: 40px 20px 20px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: rgb(56, 56, 56);
+
+        }
+
+        textarea:focus {
+            outline: none;
+        }
+
+        button {
+            position: absolute;
+            z-index: 3;
+            right: 20px;
+            bottom: -10px;
+            width: 120px;
+            height: 40px;
+            padding: 5px;
+            border-radius: 999px;
+            border: none;
+            background: rgb(36, 76, 255);
+            color: white;
+        }
+    } //addPost container ends here
+
+
+    .post-title {
+        color: rgb(56, 56, 56);
+        margin-bottom: 1rem;
+        text-align: left;
+    }
+
+    .post-list-container {
+        width: 768px;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        // background: white;
+        // border-radius: 8px;
+        
+        .post-item {
+            width: 100%;
+            height: fit-content;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid lightgrey;
+            padding: 5px 5px 10px 5px;
+
+            .poster-details {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 20px 0 20px;
+
+                .credentials {
+                    display :flex;
+                    align-items: center;
+                    gap: 5px;
+
+                    .user-image {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        background: lightgrey;
+                        margin-right: 7px;
+                    }
+                    .username {
+                        font-weight: 600;
+                    }
+                }
+
+                .timestamps {
+                    display: flex;
+                    gap: 5px;
+                    color: grey;
+
+                    .createdAt-date, .createdAt-time {
+                        font-size: .8rem;
+                    }
+
+                    .time-hr {
+                        width: 1px;
+                        height: 20px;
+                        background: lightgrey;
+                    }
+                }
+            }
+
+            p.post-content {
+                color: rgb(56, 56, 56);
+                font-size: 1rem;
+                margin: 10px 20px 10px 60px;
+                padding: 15px 10px 15px 15px;
+                // background: yellow;
+                border: 1px solid lightgrey;
+                border-radius: 8px;
+
+            }
+
+            .post-interaction {
+                display: flex;
+                align-items: center;
+                margin-left: 50px;
+                // gap: 5px;
+                // position: absolute;
+                // left: 20px;
+                // bottom: 12px;
+                
+    
+                span {
+                    padding: 2px 10px;
+                    color: grey;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    transition: .2s ease-in-out;
+                }
+                span:hover {
+                    background: rgb(236, 236, 236);
+                }
+    
+                div.hr {
+                    width: 1px;
+                    height: 20px;
+                    background: lightgrey;
+                }
+            }
+        }
+    }
+}
+
