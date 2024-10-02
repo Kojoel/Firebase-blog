@@ -34,4 +34,8 @@ export class UserProfileComponent {
   logout() {
     this.authService.logout();
   }
+
+  goToHome() {
+    this.router.navigateByUrl('/home')
+  }
 }
