@@ -26,6 +26,21 @@
 
             }
         }
+
+        .menu {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: relative;
+            display: grid;
+            place-items: center;
+            transition: .2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .menu:hover {
+            background: lightgrey;
+        }
     }
 
     .addPost-container {
@@ -212,12 +227,15 @@
                 }
 
                 .comments-list {
+                    height: 14rem;
                     display: flex;
                     flex-direction: column;
                     gap: 15px;
                     background: rgb(231, 231, 231);
                     border-radius: 8px;
                     padding: 20px;
+                    overflow-y: scroll;
+                    
 
                     .comment-item {
 
@@ -289,3 +307,23 @@
     }
 }
 
+
+
+div.profile-logout {
+    position: absolute;
+    z-index: 5;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    right: 5px;
+    top: 30px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    // display: none;
+
+    span.profile:hover, span.logout:hover {
+        color: crimson;
+    }
+}
