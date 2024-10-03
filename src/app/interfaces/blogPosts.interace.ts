@@ -1,5 +1,5 @@
 // User interface
-export interface User {
+export interface Users {
     id: string;
     displayName: string;
     email: string;
@@ -16,7 +16,7 @@ export interface BlogPost {
 }
 
 // Comments interface
-export interface Comment {
+export interface Comments {
     id: string;
     content: string;
     userId: string;

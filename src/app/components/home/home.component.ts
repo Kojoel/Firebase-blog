@@ -3,8 +3,9 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserProfileComponent } from '../user-profile/user-profile.component';
 import { BlogsFirebaseService } from '../../services/blogs-firebase.service';
-import { BlogPost } from '../../interfaces/blogPosts.interace';
+import { BlogPost, Comments, Users } from '../../interfaces/blogPosts.interace';
 import { CommonModule } from '@angular/common';
+import { BlogPostService } from '../../services/blog-post.service';
 
 @Component({
   selector: 'app-home',
@@ -18,10 +19,16 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private blogPostService: BlogsFirebaseService,
+    private blogPostFireService: BlogsFirebaseService,
+    public blogPostService: BlogPostService,
+
   ) {}
 
   blogPosts!: BlogPost[];
+  users!: Users[];
+  comments!: Comments[];
+
+  content: string = '';
 
   visible: boolean = false;
 
@@ -43,10 +50,20 @@ export class HomeComponent implements OnInit {
       console.log(this.authService.currentUserSig())
     })
 
-    this.blogPostService.getBlogPosts().subscribe(blogPosts => {
-      // console.log(blogPosts);
+    this.blogPostFireService.getBlogPosts().subscribe(blogPosts => {
       this.blogPosts = blogPosts;
-      console.log(this.blogPosts);
+      console.log("BlogPosts: ", this.blogPosts);
+      // this.blogPostService.blogPostSig.set(blogPosts);
+    })
+    
+    this.blogPostFireService.getUsers().subscribe(users => {
+      this.users = users;
+      console.log("Users: ", this.users);
+    })
+
+    this.blogPostFireService.getComments().subscribe(comments => {
+      this.comments = comments;
+      console.log("Comments", this.comments);
     })
   }
 

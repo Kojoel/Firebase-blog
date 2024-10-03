@@ -21,85 +21,74 @@
     </div>
 
     <div class="addPost-container">
-        <textarea name="" id="" cols="30" rows="10" placeholder="What is on your mind?..."></textarea>
+        <textarea name="" id="" cols="30" rows="10" placeholder="What is on your mind?..." [value]="content"></textarea>
         
-        <button>Create Post</button>
+        <button (click)="blogPostService.createPost(content)">Create Post</button>
     </div>
 
     @if(blogPosts) {
-        <h3 class="post-title">Recent Posts</h3>
-        <div class="post-list-container">
-            <div class="posts">
-                @for(post of blogPosts; track post) {
-                    <div class="post-item">
-                        <div class="poster-details">
-                            <div class="credentials">
-                                <div class="user-image"></div>
-                                <p class="username">{{ post.author.displayName }} </p>
+        @if(comments) {
+            <h3 class="post-title">Recent Posts</h3>
+            <div class="post-list-container">
+                <div class="posts">
+                    @for(post of blogPosts; track post) {
+                        <div class="post-item">
+                            <div class="poster-details">
+                                <div class="credentials">
+                                    <div class="user-image"></div>
+                                    <p class="username">Nana_kojo</p>
+                                </div>
+                                <div class="timestamps">
+                                    <div class="createdAt-date">{{ post.createdAt }}</div>
+                                    <div class="time-hr"></div>
+                                    <div class="createdAt-time">{{ post.createdAt }}</div>
+                                </div>
                             </div>
-                            <div class="timestamps">
-                                <div class="createdAt-date">{{ post.createdAt | date }}</div>
-                                <div class="time-hr"></div>
-                                <div class="createdAt-time">{{ post.createdAt | date }}</div>
+                            <p class="post-content">
+                                {{ post.content }}
+                            </p>
+                            <div class="post-interaction">
+                                <span>Edit</span>
+                                <div class="hr"></div>
+                                <span (click)="toggleCommentsVisibility()">Comments (24)</span>
                             </div>
                         </div>
-                        <p class="post-content">
-                            {{ post.content }}
-                        </p>
-                        <div class="post-interaction">
-                            <span>Edit</span>
-                            <div class="hr"></div>
-                            <span (click)="toggleCommentsVisibility()">Comments (24)</span>
-                        </div>
-                    </div>
 
-                    <div class="comments" [class]="commentsVisible? 'isCommentVisible':'isCommentNotVisible'">
-                        <div class="title-icon">
-                            <div class="icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
-                                    <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
+                        <div class="comments" [class]="commentsVisible? 'isCommentVisible':'isCommentNotVisible'">
+                            <div class="title-icon">
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
+                                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
+                                    </svg>
+                                    <p class="title">Comments</p>
+                                </div>
+                                <svg class="close-btn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
                                 </svg>
-                                <p class="title">Comments</p>
                             </div>
-                            <svg class="close-btn" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
-                            </svg>
-                        </div>
-                        <div class="comments-list">
-                            @if(post) {}
-                            <div class="comment-item">
-                                <p class="user-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                                <div class="time-commented">
-                                    <span>by Joel</span>
-                                    <span>18:36pm</span>
-                                </div>
+                            <div class="comments-list">
+                                @for(comment of comments; track comment) {
+                                    <div class="comment-item">
+                                        <p class="user-comment">{{ comment.content }}</p>
+                                        <div class="time-commented">
+                                            <span>by Joel</span>
+                                            <span>18:36pm</span>
+                                        </div>
+                                    </div>
+                                }
                             </div>
-                            <div class="comment-item">
-                                <p class="user-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                                <div class="time-commented">
-                                    <span>by Joel</span>
-                                    <span>18:36pm</span>
-                                </div>
-                            </div>
-                            <div class="comment-item">
-                                <p class="user-comment">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                                <div class="time-commented">
-                                    <span>by Joel</span>
-                                    <span>18:36pm</span>
+                            <div class="addComment">
+                                <input class="comment-input" type="text" placeholder="Add a comment...">
+                                <div class="add-icon-container">
+                                    <svg class="add-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
-                        <div class="addComment">
-                            <input class="comment-input" type="text" placeholder="Add a comment...">
-                            <div class="add-icon-container">
-                                <svg class="add-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                                  </svg>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div> 
-        </div>
+                    }
+                </div> 
+            </div>
+        }
     }
 </div>
