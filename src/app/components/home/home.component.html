@@ -21,9 +21,9 @@
     </div>
 
     <div class="addPost-container">
-        <textarea name="" id="" cols="30" rows="10" placeholder="What is on your mind?..." [value]="content"></textarea>
+        <textarea name="" id="" cols="30" rows="10" placeholder="What is on your mind?..." [(ngModel)]="content"></textarea>
         
-        <button (click)="blogPostService.createPost(content)">Create Post</button>
+        <button (click)="createPost()">Create Post</button>
     </div>
 
     @if(blogPosts) {
@@ -50,11 +50,11 @@
                             <div class="post-interaction">
                                 <span>Edit</span>
                                 <div class="hr"></div>
-                                <span (click)="toggleCommentsVisibility()">Comments (24)</span>
+                                <span (click)="toggleCommentsVisibility(post.id)">Comments (24)</span>
                             </div>
                         </div>
 
-                        <div class="comments" [class]="commentsVisible? 'isCommentVisible':'isCommentNotVisible'">
+                        <div class="comments" *ngIf="visibleCommentPostId === post.id" [class]="commentsVisible? 'isCommentVisible':'isCommentNotVisible'">
                             <div class="title-icon">
                                 <div class="icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text-fill" viewBox="0 0 16 16">
@@ -68,18 +68,20 @@
                             </div>
                             <div class="comments-list">
                                 @for(comment of comments; track comment) {
-                                    <div class="comment-item">
-                                        <p class="user-comment">{{ comment.content }}</p>
-                                        <div class="time-commented">
-                                            <span>by Joel</span>
-                                            <span>18:36pm</span>
+                                    @if(comment.postId === post.id) {
+                                        <div class="comment-item">
+                                            <p class="user-comment">{{ comment.content }}</p>
+                                            <div class="time-commented">
+                                                <span>by Joel</span>
+                                                <span>18:36pm</span>
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
                             </div>
                             <div class="addComment">
-                                <input class="comment-input" type="text" placeholder="Add a comment...">
-                                <div class="add-icon-container">
+                                <input class="comment-input" type="text" placeholder="Add a comment..." [(ngModel)]="comment">
+                                <div class="add-icon-container" (click)="addComment(post.id)">
                                     <svg class="add-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
                                     </svg>

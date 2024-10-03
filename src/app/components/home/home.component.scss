@@ -355,8 +355,8 @@
 
 .isCommentNotVisible {
     animation: fadeUp 1s ease forwards;
-    height: fit-content;
-    // display: none;
+    height: 0;
+    display: none;
 }
 
 

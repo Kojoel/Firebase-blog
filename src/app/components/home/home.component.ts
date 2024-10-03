@@ -6,11 +6,12 @@ import { BlogsFirebaseService } from '../../services/blogs-firebase.service';
 import { BlogPost, Comments, Users } from '../../interfaces/blogPosts.interace';
 import { CommonModule } from '@angular/common';
 import { BlogPostService } from '../../services/blog-post.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [UserProfileComponent, CommonModule],
+  imports: [UserProfileComponent, CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -29,10 +30,12 @@ export class HomeComponent implements OnInit {
   comments!: Comments[];
 
   content: string = '';
+  comment: string = '';
 
   visible: boolean = false;
 
   commentsVisible: boolean = false;
+  visibleCommentPostId: string | null = null;
 
   createdAt: Date | undefined;
 
@@ -47,18 +50,18 @@ export class HomeComponent implements OnInit {
       else {
         this.authService.currentUserSig.set(null);
       }
-      console.log(this.authService.currentUserSig())
+      // console.log(this.authService.currentUserSig())
     })
 
     this.blogPostFireService.getBlogPosts().subscribe(blogPosts => {
       this.blogPosts = blogPosts;
-      console.log("BlogPosts: ", this.blogPosts);
+      // console.log("BlogPosts: ", this.blogPosts);
       // this.blogPostService.blogPostSig.set(blogPosts);
     })
     
     this.blogPostFireService.getUsers().subscribe(users => {
       this.users = users;
-      console.log("Users: ", this.users);
+      // console.log("Users: ", this.users);
     })
 
     this.blogPostFireService.getComments().subscribe(comments => {
@@ -80,21 +83,33 @@ export class HomeComponent implements OnInit {
     this.visible = !this.visible;
   }
 
-  toggleCommentsVisibility() {
-    this.commentsVisible = !this.commentsVisible;
-    console.log(this.commentsVisible);
+  // toggleCommentsVisibility(postId: string) {
+  //   if(postId) {
+  //     this.commentsVisible = !this.commentsVisible;
+  //     console.log(this.commentsVisible);
+  //     console.log("Content: ", this.content);
+  //   }
+  //   else {
+  //     this.commentsVisible = false;
+  //   }
+  // }
+
+  toggleCommentsVisibility(postId: string) {
+    if (this.visibleCommentPostId === postId) {
+      this.visibleCommentPostId = null;
+    } else {
+      this.visibleCommentPostId = postId;
+      this.commentsVisible = !this.commentsVisible;
+    }
   }
 
-  // getTimeStamps() {
-  //   this.blogPosts.forEach(items => {
-  //     const createdAt = items.createdAt
+  createPost() {
+    this.blogPostService.createPost(this.content);
+    this.content = '';
+  }
 
-  //   })
-  // }
-
-  // convertTimestampToDateTime(timestamp: string) {
-  //   const date = new Date(timestamp * 1000); // Convert to milliseconds
-  //   return date.toLocaleString(); // Return as a human-readable string
-  // }
-
+  addComment(postId: string) {
+    this.blogPostService.addComment(this.comment, postId);
+    this.comment = '';
+  }
 }

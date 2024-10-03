@@ -21,4 +21,6 @@ export interface Comments {
     content: string;
     userId: string;
     createdAt: Date;
+    postId: string;
+    
   }
