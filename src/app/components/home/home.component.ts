@@ -7,11 +7,13 @@ import { BlogPost, Comments, Users } from '../../interfaces/blogPosts.interace';
 import { CommonModule } from '@angular/common';
 import { BlogPostService } from '../../services/blog-post.service';
 import { FormsModule } from '@angular/forms';
+import { EditPostComponent } from '../edit-post/edit-post.component';
+import { EditModalService } from '../../services/edit-modal.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [UserProfileComponent, CommonModule, FormsModule],
+  imports: [UserProfileComponent, CommonModule, FormsModule, EditPostComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -22,6 +24,7 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private blogPostFireService: BlogsFirebaseService,
     public blogPostService: BlogPostService,
+    public editModalService: EditModalService,
 
   ) {}
 
@@ -33,6 +36,7 @@ export class HomeComponent implements OnInit {
   comment: string = '';
 
   visible: boolean = false;
+  // editModalVisible: boolean = false;
 
   commentsVisible: boolean = false;
   visibleCommentPostId: string | null = null;
@@ -83,16 +87,12 @@ export class HomeComponent implements OnInit {
     this.visible = !this.visible;
   }
 
-  // toggleCommentsVisibility(postId: string) {
-  //   if(postId) {
-  //     this.commentsVisible = !this.commentsVisible;
-  //     console.log(this.commentsVisible);
-  //     console.log("Content: ", this.content);
-  //   }
-  //   else {
-  //     this.commentsVisible = false;
-  //   }
+  // getCurrentPost(currentPost: BlogPost) {
+  //   this.editModalService.postData = currentPost;
+  //   console.log(currentPost);
   // }
+
+
 
   toggleCommentsVisibility(postId: string) {
     if (this.visibleCommentPostId === postId) {
@@ -112,4 +112,8 @@ export class HomeComponent implements OnInit {
     this.blogPostService.addComment(this.comment, postId);
     this.comment = '';
   }
+
+  // toggleEditPost() {
+  //   this.editModalVisible = !this.editModalVisible;
+  // }
 }

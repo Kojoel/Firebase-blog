@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { BlogPost } from '../interfaces/blogPosts.interace';
 import { BlogsFirebaseService } from './blogs-firebase.service';
-import { addDoc } from '@angular/fire/firestore';
+import { addDoc, doc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,19 @@ export class BlogPostService {
       'createdAt': new Date(),
       'postId': postId,
       'userId': '',
+    })
+  }
+
+  editPost(postId: string, updatedContent: string): void {
+    const postToEdit = doc(this.blogsFireBaseService.blogPostsCollection, postId);
+
+    updateDoc(postToEdit, {
+      content: updatedContent,
+      updatedAt: new Date(),
+    }).then(() => {
+      console.log('Post updated successfully');
+    }).catch(error => {
+      console.error('Error updating post:', error);
     })
   }
 

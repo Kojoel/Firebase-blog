@@ -1,1 +1,11 @@
-<p>edit-post works!</p>
+@if(currentPost) {
+    <div class="edit-post-container">
+        <textarea name="" id="" cols="30" rows="10" class="edit-post" placeholder="Edit your post here..." [(ngModel)]="currentPostText"></textarea>
+        <div class="button-controls-container">
+            <div class="btn-controls">
+                <button (click)="updatePost(currentPost.id)">Update</button>
+                <button (click)="cancelUpdate()">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
