@@ -16,13 +16,11 @@ export class EditModalService {
   getPostData(post: BlogPost) {
     // this.toggleEditPost();
     this.postData = post;
-    console.log(this.postData);
-    console.log(this.editModalVisible);
     this.router.navigateByUrl('/edit');
   }
 
-  toggleEditPost() {
-    this.editModalVisible = !this.editModalVisible;
-    // console.log("its working o", this.postData);
-  }
+  // toggleEditPost() {
+  //   this.editModalVisible = !this.editModalVisible;
+  //   // console.log("its working o", this.postData);
+  // }
 }

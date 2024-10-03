@@ -40,6 +40,7 @@ export class LoginComponent {
         rawloginForm.password
       ).subscribe({
         next: () => {
+          this.authService.isLoggedIn = true;
           this.router.navigateByUrl('/home');
         },
         error: (err) => {
@@ -56,6 +57,7 @@ export class LoginComponent {
   loginWithGoogle() {
     this.authService.googleSignIn().subscribe({
       next: (user) => {
+        this.authService.isLoggedIn = true;
         this.router.navigateByUrl('/home');
       },
       error: (err) => {
