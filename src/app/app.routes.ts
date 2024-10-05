@@ -7,10 +7,11 @@ import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { authGuard } from './auth.guard';
 
 export const routes: Routes = [
-    {path: '', component: LoginComponent},
+    {path: '', component: HomeComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'home', component: HomeComponent, canActivate: [authGuard]},
+    // {path: 'home', component: HomeComponent, canActivate: [authGuard]},
+    {path: 'home', component: HomeComponent},
     {path: 'profile', component: UserProfileComponent, canActivate: [authGuard]},
     {path: 'edit', component: EditPostComponent, canActivate: [authGuard]},
     {path: '**', redirectTo: '', pathMatch:'full'},

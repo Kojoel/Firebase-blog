@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { BlogPost } from '../interfaces/blogPosts.interace';
 import { BlogsFirebaseService } from './blogs-firebase.service';
-import { addDoc, doc, updateDoc } from '@angular/fire/firestore';
+import { addDoc, deleteDoc, doc, getDocs, query, updateDoc, where } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { addDoc, doc, updateDoc } from '@angular/fire/firestore';
 export class BlogPostService {
 
   constructor(
-    private blogsFireBaseService: BlogsFirebaseService
+    private blogsFireBaseService: BlogsFirebaseService,
   ) { }
 
   createPost(content: string): void {
@@ -38,11 +38,42 @@ export class BlogPostService {
       content: updatedContent,
       updatedAt: new Date(),
     }).then(() => {
-      console.log('Post updated successfully');
+      // console.log('Post updated successfully');
     }).catch(error => {
-      console.error('Error updating post:', error);
+      // console.error('Error updating post:', error);
     })
   }
+
+  
+  deleteComment(commentId: string): void{
+    const commentDel = doc(this.blogsFireBaseService.commentsCollection, commentId);
+
+    deleteDoc(commentDel).then(() => {
+      // console.log("comment deleted", commentDel);
+    }).catch(error => {
+      // console.error("Error deleting comment", error);
+    })
+  }
+
+
+  async deletePost(postId: string): Promise<void>{
+    const postToDel = doc(this.blogsFireBaseService.blogPostsCollection, postId);
+    deleteDoc(postToDel).then(() => {
+      // console.log("Post deleted", postToDel);
+    }).catch(error => {
+      // console.error("Error deleting Post", error);
+    })
+
+    const commentsQuery = query(this.blogsFireBaseService.commentsCollection, where("postId", "==", postId));
+    const commentsSnapshot = await getDocs(commentsQuery);
+
+    const deletePromises = commentsSnapshot.docs.map(commentDoc => 
+      deleteDoc(doc(this.blogsFireBaseService.commentsCollection, commentDoc.id))
+    );
+
+    await Promise.all(deletePromises);
+  }
+
 
 
 }
