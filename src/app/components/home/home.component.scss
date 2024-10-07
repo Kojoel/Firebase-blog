@@ -162,6 +162,21 @@
                     // background: yellow;
                     border: 1px solid lightgrey;
                     border-radius: 8px;
+                    position: relative;
+
+                    span.delete-icon-container-post {
+                        position: absolute;
+                        right: 10px;
+                        top: 9px;
+                        padding: 5px;
+                        cursor: pointer;
+                    }
+                    span.delete-icon-container-post:hover {
+                        background: lightgrey;
+                        padding: 5px;
+                        border-radius: 50%;
+                    }
+                    
 
                 }
 
@@ -230,7 +245,8 @@
                 }
 
                 .comments-list {
-                    height: 14rem;
+                    height: fit-content;
+                    min-height: 2rem;
                     display: flex;
                     flex-direction: column;
                     gap: 15px;
@@ -242,11 +258,13 @@
                     
 
                     .comment-item {
+                        position: relative;
 
                         p.user-comment {
                             background: lightgrey;
                             padding: 10px 20px;
                             border-radius: 8px;
+                            height: 40px;
                         }
     
                         .time-commented {
@@ -257,7 +275,21 @@
                             font-size: .8rem;
                         }
 
+                        span.delete-icon-container-comment {
+                            position: absolute;
+                            right: 10px;
+                            top: 7px;
+                            padding: 5px;
+                            cursor: pointer;
+                        }
+                        span.delete-icon-container-comment:hover {
+                            background: lightgrey;
+                            padding: 5px;
+                            border-radius: 50%;
+                        }
+
                     }
+
                 }
                 
                 .addComment {
