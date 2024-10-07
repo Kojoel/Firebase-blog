@@ -9,7 +9,6 @@ import { BlogPostService } from '../../services/blog-post.service';
 import { FormsModule } from '@angular/forms';
 import { EditPostComponent } from '../edit-post/edit-post.component';
 import { EditModalService } from '../../services/edit-modal.service';
-import { doc, getDocs, query, where } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-home',
@@ -21,11 +20,12 @@ import { doc, getDocs, query, where } from '@angular/fire/firestore';
 export class HomeComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private blogPostFireService: BlogsFirebaseService,
     public blogPostService: BlogPostService,
     public editModalService: EditModalService,
+
 
   ) {}
 
@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
   comment: string = '';
 
   visible: boolean = false;
-  // editModalVisible: boolean = false;
 
   commentsVisible: boolean = false;
   visibleCommentPostId: string | null = null;

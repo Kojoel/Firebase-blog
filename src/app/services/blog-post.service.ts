@@ -2,15 +2,21 @@ import { Injectable, signal } from '@angular/core';
 import { BlogPost } from '../interfaces/blogPosts.interace';
 import { BlogsFirebaseService } from './blogs-firebase.service';
 import { addDoc, deleteDoc, doc, getDocs, query, updateDoc, where } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogPostService {
 
+  userId: string | null | undefined = '';
+
   constructor(
     private blogsFireBaseService: BlogsFirebaseService,
-  ) { }
+    private authService: AuthService,
+  ) { 
+    this.authService.user$.subscribe(user => this.userId = user?.email)
+  }
 
   createPost(content: string): void {
     // this.blogPostSig.update((blogPosts) => [...blogPosts, newPost]);
@@ -18,7 +24,7 @@ export class BlogPostService {
       'content': content,
       'createdAt': new Date(),
       'updatedAt': new Date(),
-      'userId': '',
+      'userId': this.userId,
     })
   }
 
@@ -27,7 +33,7 @@ export class BlogPostService {
       'content': comment,
       'createdAt': new Date(),
       'postId': postId,
-      'userId': '',
+      'userId': this.userId,
     })
   }
 

@@ -16,6 +16,7 @@ export class AuthService {
   user$ = user(this.firebaseAuth);
   currentUserSig = signal<UserInterface | null | undefined>(undefined);
   isLoggedIn: boolean = false;
+  
 
   register(
     email: string, 
